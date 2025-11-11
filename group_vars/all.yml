@@ -1,0 +1,10 @@
+app_name: simple-login
+app_user: "{{ ansible_user | default('ubuntu') }}"
+app_dir: /opt/simple-login
+jar_name: simple-login-backend-1.0.0.jar
+frontend_src: /root/frontend-dist
+web_root: /var/www/html
+mysql_root_password: root@123
+db_name: simple_login_db
+db_user: app_user
+db_pass: AppUser@123
