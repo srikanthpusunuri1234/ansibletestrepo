@@ -22,7 +22,8 @@ variable "target_group_arn" {
 variable "instance_definitions" {
   type = map(string)
   default = {
-    "bastion" = "t2.micro"
+    "primary_db" = "t2.micro"
+    "secondary_db" = "t2.micro"
   }
 }
 

@@ -33,13 +33,14 @@ resource "aws_instance" "this" {
   ]
   key_name      = var.ec2_key_name
   vpc_security_group_ids = var.security_group_ids
-  user_data_base64 = filebase64("${path.module}/install.sh")
+  #user_data_base64 = filebase64("${path.module}/install.sh")
 
   tags = {
     Name = each.key
   }
 }
 
+/*
 resource "aws_lb_target_group_attachment" "this" {
   for_each = aws_instance.this
 
@@ -47,7 +48,7 @@ resource "aws_lb_target_group_attachment" "this" {
   target_id        = each.value.id
   port             = 80
 }
-
+*/
 output "instance_ids" {
   value = [for instance in aws_instance.this : instance.id]
 }

@@ -36,7 +36,7 @@ module "ec2" {
   security_group_ids = [module.vpc.asg_sg_id]
 }
 
-
+/*
 module "alb" {
   source     = "./modules/alb"
   subnet_ids = module.vpc.public_subnet_ids
@@ -55,6 +55,7 @@ module "asg" {
   name             = var.name1
   app_version      = var.app_version
 }
+*/
 
 /*
 module "worker_asg" {
@@ -93,4 +94,5 @@ data "aws_ami" "amazon_linux" {
   }
 }
 */
+
 
