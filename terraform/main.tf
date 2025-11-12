@@ -36,6 +36,25 @@ module "ec2" {
   security_group_ids = [module.vpc.asg_sg_id]
 }
 
+# Create dynamic inventory file for Ansible
+resource "local_file" "ansible_inventory" {
+  content = templatefile("${path.module}/inventory.tmpl", {
+    primary_ip   = module.ec2.private_ips["primary_db"]
+    replica_ip   = module.ec2.private_ips["secondary_db"]
+  })
+  filename = "${path.module}/../ansible/inventory.ini"
+}
+
+# --- Optional: Trigger Ansible automatically after Terraform apply ---
+resource "null_resource" "ansible_provision" {
+  depends_on = [local_file.ansible_inventory]
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/site.yml --ask-vault-pass"
+    working_dir = "${path.module}"
+  }
+}
+
 /*
 module "alb" {
   source     = "./modules/alb"
